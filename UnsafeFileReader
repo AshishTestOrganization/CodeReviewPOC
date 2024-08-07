@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class UnsafeFileReader {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java UnsafeFileReader <filename>");
+            return;
+        }
+        
+        String filename = args[0];
+        System.out.println("Reading file: " + filename);
+        
+        readFile(filename);
+    }
+    
+    public static void readFile(String filename) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(filename));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
